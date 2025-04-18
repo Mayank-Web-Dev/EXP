@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+
+%Document Setup:
+\newcommand{\Name}{Mayank Kumar }
+\newcommand{\RollNo}{24213442 }
+\newcommand{\Date}{April, 2025 }
+\newcommand{\Pronoun}{him }
+\newcommand{\Teacher}{Ms. Madhu Giri }
+
+\newcommand{\Title}{Experimental Psychology Practical Report}
+\newcommand{\TitleShort}{Experimental Psychology}
+
+%aAPA
+\geometry{left=1in, right=1in, top=1in, bottom=1in}
+\setlength{\parindent}{0.5in}
+\doublespacing
+\setmainfont{Times New Roman}[
+    Path = ./fonts/,
+    Extension = .ttf,
+    UprightFont = *
+]
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\TitleShort}  
+\fancyhead[R]{\thepage}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vskip 1in
+    \includegraphics[width=0.75\textwidth]{Logo.png} \\
+    \vskip 0.5in
+    {\Large \bfseries \Title}
+    \vskip 0.5cm
+    {By \\ \Name \\ \RollNo \\ 2 BPSY NCR A  \\ Bachelor of Science \\ Psychology (Honours/Honours with Research) \\ Department of Psychology \\ Christ (Deemed to be University), NCR}
+    \vskip 0.5in
+    {\textbf{Experimental Psychology-II (BPSY411-2)} \\ Under the Supervision of \\ \Teacher \\ \Date}
+\end{titlepage}
+    \thispagestyle{fancy}
+\newpage
+\begin{titlepage}
+    \begin{center}
+        {\Large \bfseries Certificate}
+    \end{center}
+    \vskip 0.5cm
+    {This is to certify that this practical report submitted by Mr. \Name ( \RollNo) is a record of the practical work completed for the course titled Experimental Psychology (BPSY411-2), by \Pronoun during the academic year 2024-2025 under my supervision in partial fulfillment for the award of BSc.Psychology (Honours/Honours with research) degree.}
+
+    \vskip 0.5in
+    {\noindent\textbf{Place:} Delhi NCR \\ \textbf{Date:} \Date}
+    \vskip 0.5in
+    \begin{flushleft}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{10cm} p{10cm}}
+        \rule{0.7\linewidth}{0.4pt} & \rule{0.7\linewidth}{0.4pt} \\
+        \textbf{Batch Supervisor Signature} & \textbf{ Dr. Ridhima Shukla} \\
+        Department of Psychology & Head of Department \\
+        School of Social Sciences  & Department of Psychology \\
+        CHRIST (Deemed to be University) & School of Social Sciences \\
+        Delhi - NCR & CHRIST (Deemed to be University) \\
+        & Delhi - NCR \\
+    \end{tabular}
+\end{flushleft}
+\vskip 0.5in
+\end{titlepage}
+\newpage
+\begin{titlepage}
+    \begin{center}
+        {\Large \bfseries Declaration}
+    \end{center}
+    \vskip 0.5cm
+    {I, \Name with Reg No. \RollNo  hereby declare that this record of practical work is original and was completely under the supervision of \Teacher for the course Experimental Psychology (BPSY411-2) in partial fulfilment for the award of BSc.Psychology (Honours/Honours with research) degree.}
+
+    \vskip 0.5in
+    {\noindent\textbf{Place:} Delhi NCR \\ \textbf{Date:} \Date}
+    \vskip 0.5in
+    \begin{flushright}
+    \noindent\rule{0.4\linewidth}{0.4pt} \\ \Name \\ Register no. \RollNo \\ Department of Psychology \\ School of Social Sciences \\ CHRIST (Deemed to be University) \\ Delhi - NCR
+    \end{flushright}
+\end{titlepage}
+
+\end{document}

@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaTeX Certificate Generator</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: white;
+        width: 16em;
+        height: 26em;
+        border: 2px solid #24135a;
+        border-bottom-left-radius: 1.5em;
+        border-top-right-radius: 1.5em;
+        box-shadow: -10px 0px 0px #24135a, -10px 5px 5px rgb(0, 0, 0, 0.2);
+        overflow: hidden;
+        position: relative;
+        transition: all 0.25s ease;
+        margin-bottom: 2em;
+      }
+
+      #login-area,
+      #Name-Area,
+      #Roll-Number-Area,
+      #Teachers-Name-Area,
+      #gender-area,
+      #footer-area {
+        position: relative;
+        z-index: 2;
+      }
+
+      #login-area {
+        width: 100%;
+        height: 3.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+
+      #login-area p {
+        top: -5px;
+        font-size: 1.5em;
+        font-weight: bold;
+        position: absolute;
+        opacity: 1;
+        z-index: 2;
+      }
+
+      #login-area #behind {
+        top: -15%;
+        left: 5px;
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        z-index: 1;
+      }
+
+      #behind {
+        position: absolute;
+        left: 1em;
+        color: #6041bf;
+      }
+
+      #Name-Area {
+        width: 88%;
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 1em;
+        transition: all 0.25s ease;
+      }
+
+      #Name-Area input {
+        width: 100%;
+        border: 2px solid #6041bf;
+        border-radius: 0.5em;
+        height: 2.5em;
+        padding-left: 1em;
+        font-size: 0.95em;
+        font-weight: 100;
+        transition: all 0.5s ease;
+        outline: none;
+        box-shadow: 0px 5px 5px -3px rgb(0, 0, 0, 0.2);
+      }
+
+      #Roll-Number-Area {
+        width: 100%;
+        padding-left: 7%;
+        padding-right: 10%;
+        height: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+        transition: all 0.25s ease;
+      }
+
+      #Roll-Number-Area input {
+        width: 88%;
+        border: 2px solid #6041bf;
+        font-size: 0.95em;
+        border-radius: 0.5em;
+        height: 2.5em;
+        padding-left: 1em;
+        transition: all 0.25s ease;
+        outline: none;
+        box-shadow: 0px 5px 5px -3px rgb(0, 0, 0, 0.2);
+      }
+      #Teachers-Name-Area {
+        width: 100%;
+        padding-left: 7%;
+        padding-right: 10%;
+        height: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+        transition: all 0.25s ease;
+      }
+
+      #Teachers-Name-Area input {
+        width: 88%;
+        border: 2px solid #6041bf;
+        font-size: 0.95em;
+        border-radius: 0.5em;
+        height: 2.5em;
+        padding-left: 1em;
+        transition: all 0.25s ease;
+        outline: none;
+        box-shadow: 0px 5px 5px -3px rgb(0, 0, 0, 0.2);
+      }
+      #gender-area {
+        width: 95%;
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.25s ease;
+      }
+
+      .gender-container {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        width: 100%;
+      }
+
+      .gender-pane {
+        outline: 2px solid #a48ced;
+        box-shadow: 0 0 10px #a48ced, inset 0 0 10px #a48ced;
+        height: 0.75cm;
+        width: 100%;
+        border-radius: 5px;
+        position: relative;
+        overflow: hidden;
+        transition: 0.7s ease;
+      }
+
+      .gender-input {
+        display: none;
+      }
+
+      .gender-label {
+        height: 1cm;
+        width: 33.33%;
+        float: left;
+        font-weight: 600;
+        letter-spacing: -1px;
+        font-size: 14px;
+        padding: 0px;
+        position: relative;
+        z-index: 1;
+        color: #a48ced;
+        text-align: center;
+        padding-top: 4px;
+      }
+
+      .selection {
+        display: none;
+        position: absolute;
+        height: 1cm;
+        width: 33.33%;
+        z-index: 0;
+        left: 0;
+        top: 0;
+        box-shadow: 0 0 10px #a48ced;
+        transition: 0.15s ease;
+      }
+
+      .gender-label:has(input:checked) {
+        color: #212121;
+      }
+
+      .gender-pane:has(.gender-label:nth-child(1):hover) {
+        transform: rotateY(-30deg);
+      }
+
+      .gender-pane:has(.gender-label:nth-child(3):hover) {
+        transform: rotateY(35deg);
+      }
+
+      .gender-label:has(input:checked) ~ .selection {
+        background-color: #a48ced;
+        display: inline-block;
+      }
+
+      .gender-label:nth-child(1):has(input:checked) ~ .selection {
+        transform: translateX(0%);
+      }
+
+      .gender-label:nth-child(2):has(input:checked) ~ .selection {
+        transform: translateX(60px);
+      }
+
+      .gender-label:nth-child(3):has(input:checked) ~ .selection {
+        transform: translateX(125px);
+      }
+
+      #footer-area {
+        margin-top: 0%;
+        padding-top: 0%;
+        width: 96%;
+        padding-left: 10%;
+        padding-right: 10%;
+        height: 7em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: #6041bf;
+        transition: all 0.25s ease;
+      }
+
+      #footer-area button {
+        width: 100%;
+        border: 2px solid #6041bf;
+        border-radius: 0.5em;
+        height: 2.5em;
+        padding-left: 1em;
+        font-size: 0.95em;
+        font-weight: 100;
+        transition: all 0.25s ease;
+        color: white;
+        font-weight: bold;
+        background-color: #6041bf;
+        box-shadow: 0px 5px 5px -3px rgb(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+
+      #footer-area p,
+      #footer-area a {
+        font-size: 0.8em;
+        transition: all 0.25s ease;
+      }
+
+      #background-color {
+        width: 100%;
+        height: 3.5em;
+        background-color: #6041bf;
+        position: absolute;
+        top: 0em;
+        z-index: 1;
+        transition: all 0.5s ease;
+        box-shadow: inset 5px 0px #24135a;
+      }
+
+      #whitefilter {
+        width: 3.5em;
+        height: 3.5em;
+        top: 2.5px;
+        right: 2.5px;
+        position: absolute;
+        z-index: 2;
+        border-top-right-radius: 1.25em;
+        box-shadow: 35px -35px 0px -1px white;
+      }
+
+      ::placeholder {
+        color: #6041bf;
+        font-weight: bold;
+      }
+
+      .form:hover {
+        width: 16em;
+        height: 26.5em;
+      }
+      #Details {
+        transition: opacity 0.3s ease;
+        opacity: 1;
+      }
+
+      #Name-Area:hover ~ #background-color {
+        height: 4.2em;
+        transform: translateY(48px);
+      }
+      #certificateForm:hover #Details {
+        opacity: 0;
+      }
+      #Name-Area:hover,
+      #Roll-Number-Area:hover,
+      #Teachers-Name-Area:hover,
+      #gender-area:hover,
+      #footer-area:hover {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      #Name-Area:hover p {
+        color: white;
+      }
+
+      #Name-Area:hover input {
+        color: white;
+        border: 2px solid white;
+        background-color: #6041bf;
+        height: 3em;
+      }
+
+      #Name-Area:hover ::placeholder {
+        color: white;
+      }
+
+      #Roll-Number-Area:hover ~ #background-color {
+        height: 55px;
+        transform: translateY(94px);
+      }
+      #Teachers-Name-Area:hover ~ #background-color {
+        height: 55px;
+        transform: translateY(144px);
+      }
+      #gender-area:hover ~ #background-color {
+        height: 50px;
+        transform: translateY(196px);
+      }
+
+      #footer-area:hover ~ #background-color {
+        height: 50px;
+        transform: translateY(256px);
+      }
+
+      #Roll-Number-Area:hover p {
+        color: white;
+      }
+
+      #Roll-Number-Area:hover input {
+        color: white;
+        border: 2px solid white;
+        background-color: #6041bf;
+        height: 3em;
+      }
+
+      #Roll-Number-Area:hover ::placeholder {
+        color: white;
+      }
+
+      #Teachers-Name-Area:hover p {
+        color: white;
+      }
+
+      #Teachers-Name-Area:hover input {
+        color: white;
+        border: 2px solid white;
+        background-color: #6041bf;
+        height: 3em;
+      }
+
+      #Teachers-Name-Area:hover ::placeholder {
+        color: white;
+      }
+      #footer-area:hover p,
+      #footer-area:hover a {
+        color: white;
+      }
+
+      #footer-area:hover button {
+        border: 2px solid white;
+        background-color: #6041bf;
+        height: 3em;
+      }
+
+      #footer-area button:active {
+        color: #6041bf;
+        background-color: white;
+        width: 90%;
+      }
+
+      /* Loader Styles */
+      .loader-container {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .loader-text {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #6041bf;
+        font-weight: bold;
+      }
+
+      .typewriter {
+        --blue: #5c86ff;
+        --blue-dark: #275efe;
+        --key: #fff;
+        --paper: #eef0fd;
+        --text: #d3d4ec;
+        --tool: #fbc56c;
+        --duration: 3s;
+        position: relative;
+        -webkit-animation: bounce05 var(--duration) linear infinite;
+        animation: bounce05 var(--duration) linear infinite;
+      }
+
+      .typewriter .slide {
+        width: 92px;
+        height: 20px;
+        border-radius: 3px;
+        margin-left: 14px;
+        transform: translateX(14px);
+        background: linear-gradient(var(--blue), var(--blue-dark));
+        -webkit-animation: slide05 var(--duration) ease infinite;
+        animation: slide05 var(--duration) ease infinite;
+      }
+
+      .typewriter .slide:before,
+      .typewriter .slide:after,
+      .typewriter .slide i:before {
+        content: "";
+        position: absolute;
+        background: var(--tool);
+      }
+
+      .typewriter .slide:before {
+        width: 2px;
+        height: 8px;
+        top: 6px;
+        left: 100%;
+      }
+
+      .typewriter .slide:after {
+        left: 94px;
+        top: 3px;
+        height: 14px;
+        width: 6px;
+        border-radius: 3px;
+      }
+
+      .typewriter .slide i {
+        display: block;
+        position: absolute;
+        right: 100%;
+        width: 6px;
+        height: 4px;
+        top: 4px;
+        background: var(--tool);
+      }
+
+      .typewriter .slide i:before {
+        right: 100%;
+        top: -2px;
+        width: 4px;
+        border-radius: 2px;
+        height: 14px;
+      }
+
+      .typewriter .paper {
+        position: absolute;
+        left: 24px;
+        top: -26px;
+        width: 40px;
+        height: 46px;
+        border-radius: 5px;
+        background: var(--paper);
+        transform: translateY(46px);
+        -webkit-animation: paper05 var(--duration) linear infinite;
+        animation: paper05 var(--duration) linear infinite;
+      }
+
+      .typewriter .paper:before {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        top: 7px;
+        border-radius: 2px;
+        height: 4px;
+        transform: scaleY(0.8);
+        background: var(--text);
+        box-shadow: 0 12px 0 var(--text), 0 24px 0 var(--text),
+          0 36px 0 var(--text);
+      }
+
+      .typewriter .keyboard {
+        width: 120px;
+        height: 56px;
+        margin-top: -10px;
+        z-index: 1;
+        position: relative;
+      }
+
+      .typewriter .keyboard:before,
+      .typewriter .keyboard:after {
+        content: "";
+        position: absolute;
+      }
+
+      .typewriter .keyboard:before {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 7px;
+        background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+        transform: perspective(10px) rotateX(2deg);
+        transform-origin: 50% 100%;
+      }
+
+      .typewriter .keyboard:after {
+        left: 2px;
+        top: 25px;
+        width: 11px;
+        height: 4px;
+        border-radius: 2px;
+        box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+          45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+          90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+          52px 10px 0 var(--key), 60px 10px 0 var(--key), 68px 10px 0 var(--key),
+          83px 10px 0 var(--key);
+        -webkit-animation: keyboard05 var(--duration) linear infinite;
+        animation: keyboard05 var(--duration) linear infinite;
+      }
+
+      /* PDF viewer */
+      .pdf-container {
+        display: none;
+        width: 100%;
+        max-width: 800px;
+        height: 600px;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+      }
+
+      @keyframes bounce05 {
+        85%,
+        92%,
+        100% {
+          transform: translateY(0);
+        }
+
+        89% {
+          transform: translateY(-4px);
+        }
+
+        95% {
+          transform: translateY(2px);
+        }
+      }
+
+      @keyframes slide05 {
+        5% {
+          transform: translateX(14px);
+        }
+
+        15%,
+        30% {
+          transform: translateX(6px);
+        }
+
+        40%,
+        55% {
+          transform: translateX(0);
+        }
+
+        65%,
+        70% {
+          transform: translateX(-4px);
+        }
+
+        80%,
+        89% {
+          transform: translateX(-12px);
+        }
+
+        100% {
+          transform: translateX(14px);
+        }
+      }
+
+      @keyframes paper05 {
+        5% {
+          transform: translateY(46px);
+        }
+
+        20%,
+        30% {
+          transform: translateY(34px);
+        }
+
+        40%,
+        55% {
+          transform: translateY(22px);
+        }
+
+        65%,
+        70% {
+          transform: translateY(10px);
+        }
+
+        80%,
+        85% {
+          transform: translateY(0);
+        }
+
+        92%,
+        100% {
+          transform: translateY(46px);
+        }
+      }
+
+      @keyframes keyboard05 {
+        5%,
+        12%,
+        21%,
+        30%,
+        39%,
+        48%,
+        57%,
+        66%,
+        75%,
+        84% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        9% {
+          box-shadow: 15px 2px 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        18% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 2px 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        27% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 12px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        36% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 12px 0 var(--key), 60px 12px 0 var(--key),
+            68px 12px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        45% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 2px 0 var(--key), 22px 10px 0 var(--key),
+            37px 10px 0 var(--key), 52px 10px 0 var(--key),
+            60px 10px 0 var(--key), 68px 10px 0 var(--key),
+            83px 10px 0 var(--key);
+        }
+
+        54% {
+          box-shadow: 15px 0 0 var(--key), 30px 2px 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        63% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 12px 0 var(--key);
+        }
+
+        72% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 2px 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 10px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+
+        81% {
+          box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key),
+            45px 0 0 var(--key), 60px 0 0 var(--key), 75px 0 0 var(--key),
+            90px 0 0 var(--key), 22px 10px 0 var(--key), 37px 12px 0 var(--key),
+            52px 10px 0 var(--key), 60px 10px 0 var(--key),
+            68px 10px 0 var(--key), 83px 10px 0 var(--key);
+        }
+      }
+    </style>
+</head>
+<body>
+  <!-- Form Section -->
+  <div id="formSection">
+    <form class="form" id="certificateForm">
+      <div id="login-area">
+        <p id="Details">Details</p>
+        <p id="behind">Generate Certificate and Declaration</p>
+      </div>
+
+      <div id="Name-Area">
+        <input placeholder="Name" id="Name" class="input" type="text" required />
+      </div>
+
+      <div id="Roll-Number-Area">
+        <input placeholder="Registration Number" id="RegNumber" class="input" type="text" required />
+      </div>
+      
+      <div id="Teachers-Name-Area">
+        <input placeholder="Teachers Name" id="TeachName" class="input" type="text" required />
+      </div>
+      
+      <div id="gender-area">
+        <div class="gender-container">
+          <div class="gender-pane">
+            <label class="gender-label">
+              <span>Him</span>
+              <input id="male" class="gender-input" name="gender" type="radio" value="him" />
+            </label>
+            <label class="gender-label">
+              <span>Her</span>
+              <input id="female" class="gender-input" checked="checked" name="gender" type="radio" value="her" />
+            </label>
+            <label class="gender-label">
+              <span>Them</span>
+              <input id="neutral" class="gender-input" name="gender" type="radio" value="them" />
+            </label>
+            <span class="selection"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-area">
+        <button type="submit">Generate</button>
+      </div>
+
+      <div id="background-color"></div>
+    </form>
+  </div>
+
+  <!-- Loader Section (initially hidden) -->
+  <div id="loaderSection" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.9); z-index: 1000; flex-direction: column; justify-content: center; align-items: center;">
+    <div class="typewriter">
+      <div class="slide"><i></i></div>
+      <div class="paper"></div>
+      <div class="keyboard"></div>
+    </div>
+    <p style="margin-top: 20px; font-family: Arial, sans-serif;">Generating your PDF, please wait...</p>
+  </div>
+
+  <!-- PDF Viewer Section (initially hidden) -->
+  <div id="pdfSection" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.9); z-index: 900;">
+    <div style="width: 100%; height: 100%; display: flex; flex-direction: column;">
+      <div style="padding: 10px; background-color: #6041bf; color: white; display: flex; justify-content: space-between;">
+        <h3>Generated Certificate</h3>
+        <button id="backToForm" style="background: white; color: #6041bf; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Back to Form</button>
+      </div>
+      <iframe id="pdfViewer" style="flex-grow: 1; width: 100%; border: none;"></iframe>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const certificateForm = document.getElementById('certificateForm');
+      const formSection = document.getElementById('formSection');
+      const loaderSection = document.getElementById('loaderSection');
+      const pdfSection = document.getElementById('pdfSection');
+      const pdfViewer = document.getElementById('pdfViewer');
+      const backToForm = document.getElementById('backToForm');
+      document.getElementById('TeachName').value = 'Ms. Madhu Giri';
+      // Make sure the loader is hidden on page load
+      loaderSection.style.display = 'none';
+      pdfSection.style.display = 'none';
+      formSection.style.display = 'block';
+
+      certificateForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form values
+        const name = document.getElementById('Name').value;
+        const regNumber = document.getElementById('RegNumber').value;
+        const teacherName = document.getElementById('TeachName').value;
+        const pronoun = document.querySelector('input[name="gender"]:checked').value;
+        
+        // Show loader - ONLY when the form is submitted
+        formSection.style.display = 'none';
+        loaderSection.style.display = 'flex';  // Change from 'block' to 'flex' to center the loader
+        
+        // Send data to the server
+        fetch('/generate-pdf', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            regNumber: regNumber,
+            teacherName: teacherName,
+            pronoun: pronoun
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Set PDF viewer source and show it
+            pdfViewer.src = data.pdf_url;
+            loaderSection.style.display = 'none';
+            pdfSection.style.display = 'block';
+          } else {
+            // Show error message
+            alert('Error: ' + data.error);
+            loaderSection.style.display = 'none';
+            formSection.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('There was an error generating your PDF. Please try again.');
+          loaderSection.style.display = 'none';
+          formSection.style.display = 'block';
+        });
+      });
+      
+      backToForm.addEventListener('click', function() {
+        pdfSection.style.display = 'none';
+        formSection.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
